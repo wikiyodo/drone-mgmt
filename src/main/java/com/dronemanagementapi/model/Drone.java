@@ -73,5 +73,4 @@ public class Drone {
    public String getState() {
       return state;
    }
-
 }
