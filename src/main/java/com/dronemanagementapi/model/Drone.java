@@ -6,7 +6,7 @@ import javax.persistence.Column;
 public class Drone {
    @Id
 
-   @Column(name = "serial_number", columnDefinition = "VARCHAR(100) NOT NULL")
+   @Column(name = "serial_number", columnDefinition = "VARCHAR(100) UNIQUE NOT NULL")
    private String serialNumber;
 
    @Column(name = "MODEL", columnDefinition = "ENUM ('Lightweight', 'Middleweight', 'Cruiserweight', 'Heavyweight')")
