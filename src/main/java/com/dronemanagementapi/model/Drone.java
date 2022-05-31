@@ -1,8 +1,12 @@
 package com.dronemanagementapi.model;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 
+@Entity
+@Table(name = "drones")
 public class Drone {
    @Id
 
