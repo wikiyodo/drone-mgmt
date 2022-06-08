@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  mysqldbinstance:
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      MYSQL_DATABASE: drone_db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3303:3306"
+    networks:
+      - default
+  droneservice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    ports:
+      - "8001:8001"
+    networks:
+      - default
+    restart: on-failure
+
+networks:
+  default:
+    driver: bridge
