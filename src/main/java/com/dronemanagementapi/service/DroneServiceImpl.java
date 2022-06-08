@@ -67,6 +67,15 @@ public class DroneServiceImpl {
                "Error in provided data");
       }
 
+      if (drone.getBatteryCapacity() < 25.0) {
+         throw new CustomArgumentException("batteryLevel",
+               drone.getBatteryCapacity() + "%",
+               "Battery Low! battery level below 25%");
+      }
+
+      drone.setState("LOADING");
+      droneRepository.save(drone);
+
       for (int i = 0; i < medicationCodes.size(); i++) {
          Medication medication = medicationRepository.findByCode(medicationCodes.get(i));
 
@@ -95,6 +104,9 @@ public class DroneServiceImpl {
          droneMedicationRepository.save(droneMedication);
       }
 
+      drone.setState("LOADED");
+      droneRepository.save(drone);
+
       response.setDrone(drone);
       response.setMedications(medications);
 
@@ -112,9 +124,6 @@ public class DroneServiceImpl {
                "Error in provided data");
       }
 
-      drone.setState("LOADING");
-      droneRepository.save(drone);
-
       List<DroneMedication> droneMedications = droneMedicationRepository.findByDrone(drone);
       List<Medication> medications = new ArrayList<Medication>();
 
@@ -126,9 +135,6 @@ public class DroneServiceImpl {
 
       response.setDrone(drone);
       response.setMedications(medications);
-
-      drone.setState("LOADED");
-      droneRepository.save(drone);
 
       return response;
    }
