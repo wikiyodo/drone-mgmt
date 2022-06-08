@@ -1,16 +1,11 @@
 package com.dronemanagementapi.data.response;
 
-public class DroneResponse {
-   private String message;
+public class DroneResponse extends GeneralData {
    private String serialNumber;
    private String model;
    private Double weightLimit;
    private Double batteryCapacity;
    private String state;
-
-   public void setMessage(String message) {
-      this.message = message;
-   }
 
    public void setSerialNumber(String serialNumber) {
       this.serialNumber = serialNumber;
@@ -30,10 +25,6 @@ public class DroneResponse {
 
    public void setState(String state) {
       this.state = state;
-   }
-
-   public String getMessage() {
-      return message;
    }
 
    public String getSerialNumber() {

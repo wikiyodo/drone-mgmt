@@ -1,4 +1,4 @@
-package com.dronemanagementapi.services;
+package com.dronemanagementapi.service;
 
 import com.dronemanagementapi.data.request.NewDroneRequest;
 import com.dronemanagementapi.data.response.DroneResponse;

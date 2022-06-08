@@ -1,26 +1,46 @@
 package com.dronemanagementapi.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "drone_medications")
 public class DroneMedication {
-   @Column(name = "drone_id", columnDefinition = "INT NOT NULL")
-   private int droneId;
-
-   @Column(name = "medication_id", columnDefinition = "INT NOT NULL")
-   private int medicationId;
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "id")
+   private Integer id;
 
    @OneToOne
-   @JoinColumn(name = "medication_id")
+   @JoinColumn(name = "medication_id", referencedColumnName = "id")
    private Medication medication;
+
+   @OneToOne
+   @JoinColumn(name = "drone_id", referencedColumnName = "id")
+   private Drone drone;
+
+   @Column(name = "created_at", columnDefinition = "DATETIME", nullable = false)
+   private LocalDateTime createdDate;
+
+   @Column(name = "completed_at", columnDefinition = "DATETIME", nullable = false)
+   private LocalDateTime completedDate;
 
    public DroneMedication() {
    }
 
-   public DroneMedication(int droneId, int medicationId) {
-      this.droneId = droneId;
-      this.medicationId = medicationId;
+   public DroneMedication(Drone drone, Medication medication) {
+      super();
+
+      this.drone = drone;
+      this.medication = medication;
    }
 
    public Medication getMedication() {
