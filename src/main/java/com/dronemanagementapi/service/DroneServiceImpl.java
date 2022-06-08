@@ -15,6 +15,7 @@ import com.dronemanagementapi.exceptions.CustomArgumentException;
 import com.dronemanagementapi.model.Drone;
 import com.dronemanagementapi.model.DroneMedication;
 import com.dronemanagementapi.model.Medication;
+import com.dronemanagementapi.model.seeds.DroneSeeder;
 import com.dronemanagementapi.model.seeds.MedicationSeeder;
 import com.dronemanagementapi.repository.DroneMedicationRepository;
 import com.dronemanagementapi.repository.DroneRepository;
@@ -169,6 +170,9 @@ public class DroneServiceImpl {
    @EventListener
    public void seed(ContextRefreshedEvent event) {
       MedicationSeeder medicationSeeder = new MedicationSeeder(medicationRepository);
+      DroneSeeder droneSeeder = new DroneSeeder(droneRepository);
+
       medicationSeeder.run();
+      droneSeeder.run();
    }
 }
