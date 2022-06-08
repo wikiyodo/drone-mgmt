@@ -22,18 +22,18 @@ public class MedicationSeeder {
       List<String[]> medications = new ArrayList<String[]>();
 
       String[] medication1 = { "Medication 1", "20.5", "MED1", "http://medication1.url" };
-      String[] medication2 = { "Medication 2", "60", "MED1", "http://medication1.url" };
-      String[] medication3 = { "Medication 3", "100", "MED1", "http://medication1.url" };
-      String[] medication4 = { "Medication 4", "6", "MED1", "http://medication1.url" };
-      String[] medication5 = { "Medication 5", "10.5", "MED1", "http://medication1.url" };
-      String[] medication6 = { "Medication 6", "23.5", "MED1", "http://medication1.url" };
-      String[] medication7 = { "Medication 7", "26.5", "MED1", "http://medication1.url" };
-      String[] medication8 = { "Medication 8", "20.5", "MED1", "http://medication1.url" };
-      String[] medication9 = { "Medication 9", "20.5", "MED1", "http://medication1.url" };
-      String[] medication10 = { "Medication 10", "50.5", "MED1", "http://medication1.url" };
-      String[] medication11 = { "Medication 11", "40.5", "MED1", "http://medication1.url" };
-      String[] medication12 = { "Medication 12", "80.5", "MED1", "http://medication1.url" };
-      String[] medication13 = { "Medication 13", "70.5", "MED1", "http://medication1.url" };
+      String[] medication2 = { "Medication 2", "60", "MED2", "http://medication1.url" };
+      String[] medication3 = { "Medication 3", "100", "MED3", "http://medication1.url" };
+      String[] medication4 = { "Medication 4", "6", "MED4", "http://medication1.url" };
+      String[] medication5 = { "Medication 5", "10.5", "MED5", "http://medication1.url" };
+      String[] medication6 = { "Medication 6", "23.5", "MED6", "http://medication1.url" };
+      String[] medication7 = { "Medication 7", "26.5", "MED7", "http://medication1.url" };
+      String[] medication8 = { "Medication 8", "20.5", "MED8", "http://medication1.url" };
+      String[] medication9 = { "Medication 9", "20.5", "MED9", "http://medication1.url" };
+      String[] medication10 = { "Medication 10", "50.5", "MED10", "http://medication1.url" };
+      String[] medication11 = { "Medication 11", "40.5", "MED11", "http://medication1.url" };
+      String[] medication12 = { "Medication 12", "80.5", "MED12", "http://medication1.url" };
+      String[] medication13 = { "Medication 13", "70.5", "MED13", "http://medication1.url" };
 
       medications.add(medication1);
       medications.add(medication2);

@@ -2,9 +2,12 @@ package com.dronemanagementapi.controller;
 
 import javax.validation.Valid;
 
+import com.dronemanagementapi.data.request.LoadDroneMedicationsRequest;
 import com.dronemanagementapi.data.request.NewDroneRequest;
+import com.dronemanagementapi.data.response.DroneMedicationsResponse;
 import com.dronemanagementapi.data.response.DroneResponse;
 import com.dronemanagementapi.data.response.GeneralResponse;
+import com.dronemanagementapi.exceptions.CustomArgumentException;
 import com.dronemanagementapi.service.DroneServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,29 @@ public class MainController {
          response.setMessage("Drone has been succesfully created");
          response.setStatus(true);
          response.setData(newDrone);
+      } catch (Exception $e) {
+         response.setMessage($e.getMessage());
+         response.setStatus(false);
+      }
+
+      return new ResponseEntity<GeneralResponse>(response, HttpStatus.CREATED);
+   }
+
+   @PostMapping(path = "/medications", consumes = "application/json", produces = "application/json")
+   public ResponseEntity<GeneralResponse> loadMedicationsToDrone(
+         @Valid @RequestBody LoadDroneMedicationsRequest loadDroneMedicationsRequest)
+         throws Exception {
+      GeneralResponse response = new GeneralResponse();
+
+      try {
+         DroneMedicationsResponse droneMedications = droneService.loadMedication(loadDroneMedicationsRequest);
+         response.setMessage("Medications have been loaded!");
+         response.setStatus(true);
+         response.setData(droneMedications);
+      } catch (CustomArgumentException $e) {
+         response.setMessage($e.getMessage());
+         response.setStatus(false);
+         response.setError($e.getFieldErrors());
       } catch (Exception $e) {
          response.setMessage($e.getMessage());
          response.setStatus(false);

@@ -1,9 +1,17 @@
 package com.dronemanagementapi.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.dronemanagementapi.data.request.LoadDroneMedicationsRequest;
 import com.dronemanagementapi.data.request.NewDroneRequest;
+import com.dronemanagementapi.data.response.DroneMedicationsResponse;
 import com.dronemanagementapi.data.response.DroneResponse;
 import com.dronemanagementapi.enums.DroneState;
+import com.dronemanagementapi.exceptions.CustomArgumentException;
 import com.dronemanagementapi.model.Drone;
+import com.dronemanagementapi.model.DroneMedication;
+import com.dronemanagementapi.model.Medication;
 import com.dronemanagementapi.model.seeds.MedicationSeeder;
 import com.dronemanagementapi.repository.DroneMedicationRepository;
 import com.dronemanagementapi.repository.DroneRepository;
@@ -18,8 +26,8 @@ import org.springframework.stereotype.Service;
 public class DroneServiceImpl {
    @Autowired
    private DroneRepository droneRepository;
-   // @Autowired
-   // private DroneMedicationRepository droneMedicationRepository;
+   @Autowired
+   private DroneMedicationRepository droneMedicationRepository;
    @Autowired
    private MedicationRepository medicationRepository;
 
@@ -38,6 +46,54 @@ public class DroneServiceImpl {
       response.setSerialNumber(newDroneRequest.getSerialNumber());
       response.setState(drone.getState());
       response.setWeightLimit(newDroneRequest.getWeightLimit());
+
+      return response;
+   }
+
+   public DroneMedicationsResponse loadMedication(LoadDroneMedicationsRequest loadDroneMedicationsRequest)
+         throws CustomArgumentException {
+      List<Medication> medications = new ArrayList<Medication>();
+      Drone drone = droneRepository.findBySerialNumber(loadDroneMedicationsRequest.getSerialNumber());
+      List<String> medicationCodes = loadDroneMedicationsRequest.getMedicationCodes();
+      DroneMedicationsResponse response = new DroneMedicationsResponse();
+      Double totalMedicationSize = 0.0;
+
+      if (drone == null) {
+         throw new CustomArgumentException("serialNumber",
+               "Could not locate drone with the serial number: " + loadDroneMedicationsRequest.getSerialNumber(),
+               "Error in provided data");
+      }
+
+      for (int i = 0; i < medicationCodes.size(); i++) {
+         Medication medication = medicationRepository.findByCode(medicationCodes.get(i));
+
+         if (medication == null) {
+            throw new CustomArgumentException("serialNumber",
+                  "Could not locate medication with the code: " + medicationCodes.get(i),
+                  "Error in provided data");
+         }
+
+         totalMedicationSize += medication.getWeight();
+         medications.add(medication);
+      }
+
+      if (totalMedicationSize > drone.getWeightLimit()) {
+         CustomArgumentException error = new CustomArgumentException("Drone overloaded!");
+         error.addError("droneWeightLimit", drone.getWeightLimit() + "");
+         error.addError("medicationTotalSize", totalMedicationSize + "");
+         throw error;
+      }
+
+      for (int i = 0; i < medications.size(); i++) {
+         DroneMedication droneMedication = new DroneMedication();
+         droneMedication.setDrone(drone);
+         droneMedication.setMedication(medications.get(i));
+         droneMedication.setCreatedDate();
+         droneMedicationRepository.save(droneMedication);
+      }
+
+      response.setDrone(drone);
+      response.setMedications(medications);
 
       return response;
    }

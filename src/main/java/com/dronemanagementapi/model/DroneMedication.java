@@ -30,7 +30,7 @@ public class DroneMedication {
    @Column(name = "created_at", columnDefinition = "DATETIME", nullable = false)
    private LocalDateTime createdDate;
 
-   @Column(name = "completed_at", columnDefinition = "DATETIME", nullable = false)
+   @Column(name = "completed_at", columnDefinition = "DATETIME", nullable = true)
    private LocalDateTime completedDate;
 
    public DroneMedication() {
@@ -43,7 +43,35 @@ public class DroneMedication {
       this.medication = medication;
    }
 
+   public void setMedication(Medication medication) {
+      this.medication = medication;
+   }
+
+   public void setDrone(Drone drone) {
+      this.drone = drone;
+   }
+
+   public void setCompletedDate() {
+      this.completedDate = java.time.LocalDateTime.now();
+   }
+
+   public void setCreatedDate() {
+      this.createdDate = java.time.LocalDateTime.now();
+   }
+
    public Medication getMedication() {
-      return this.medication;
+      return medication;
+   }
+
+   public Drone getDrone() {
+      return drone;
+   }
+
+   public LocalDateTime getCompletedDate() {
+      return completedDate;
+   }
+
+   public LocalDateTime getCreatedDate() {
+      return createdDate;
    }
 }

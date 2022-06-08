@@ -7,6 +7,8 @@ import com.dronemanagementapi.enums.DroneModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -21,6 +23,7 @@ public class Drone {
    @Column(name = "serial_number", columnDefinition = "VARCHAR(100) UNIQUE NOT NULL")
    private String serialNumber;
 
+   @Enumerated(EnumType.STRING)
    @Column(name = "model", columnDefinition = "ENUM ('Lightweight', 'Middleweight', 'Cruiserweight', 'Heavyweight')")
    private DroneModel model;
 
@@ -52,6 +55,10 @@ public class Drone {
 
    public void setModel(DroneModel model) {
       this.model = model;
+   }
+
+   public void setModel(String model) {
+      this.model = DroneModel.valueOf(model);
    }
 
    public void setWeightLimit(Double weightLimit) {
