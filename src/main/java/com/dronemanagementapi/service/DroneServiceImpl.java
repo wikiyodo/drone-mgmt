@@ -6,6 +6,7 @@ import java.util.List;
 import com.dronemanagementapi.data.request.DroneBySerialNumberRequest;
 import com.dronemanagementapi.data.request.LoadDroneMedicationsRequest;
 import com.dronemanagementapi.data.request.NewDroneRequest;
+import com.dronemanagementapi.data.response.DroneBatteryResponse;
 import com.dronemanagementapi.data.response.DroneMedicationsResponse;
 import com.dronemanagementapi.data.response.DroneResponse;
 import com.dronemanagementapi.data.response.DronesResponse;
@@ -138,6 +139,23 @@ public class DroneServiceImpl {
       DronesResponse response = new DronesResponse();
 
       response.setDrones(drones);
+
+      return response;
+   }
+
+   public DroneBatteryResponse getBatteryLevel(DroneBySerialNumberRequest droneBySerialNumberRequest)
+         throws CustomArgumentException {
+      Drone drone = droneRepository.findBySerialNumber(droneBySerialNumberRequest.getSerialNumber());
+      DroneBatteryResponse response = new DroneBatteryResponse();
+
+      if (drone == null) {
+         throw new CustomArgumentException("serialNumber",
+               "Could not locate drone with the serial number: " + droneBySerialNumberRequest.getSerialNumber(),
+               "Error in provided data");
+      }
+
+      response.setBatteryCapacity(drone.getBatteryCapacity());
+      response.setSerialNumber(drone.getSerialNumber());
 
       return response;
    }

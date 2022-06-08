@@ -1,6 +1,6 @@
 package com.dronemanagementapi.data.response;
 
-public class DroneBatteryResponse {
+public class DroneBatteryResponse extends GeneralData {
    private String serialNumber;
 
    private Double batteryCapacity;
@@ -17,7 +17,7 @@ public class DroneBatteryResponse {
       return serialNumber;
    }
 
-   public Double getBatteryCapacity() {
-      return batteryCapacity;
+   public String getBatteryLevel() {
+      return batteryCapacity + "%";
    }
 }

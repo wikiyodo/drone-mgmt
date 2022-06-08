@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import com.dronemanagementapi.data.request.DroneBySerialNumberRequest;
 import com.dronemanagementapi.data.request.LoadDroneMedicationsRequest;
 import com.dronemanagementapi.data.request.NewDroneRequest;
+import com.dronemanagementapi.data.response.DroneBatteryResponse;
 import com.dronemanagementapi.data.response.DroneMedicationsResponse;
 import com.dronemanagementapi.data.response.DroneResponse;
 import com.dronemanagementapi.data.response.DronesResponse;
@@ -102,6 +103,29 @@ public class MainController {
          response.setMessage("Available drones!");
          response.setStatus(true);
          response.setData(drones);
+      } catch (CustomArgumentException $e) {
+         response.setMessage($e.getMessage());
+         response.setStatus(false);
+         response.setError($e.getFieldErrors());
+      } catch (Exception $e) {
+         response.setMessage($e.getMessage());
+         response.setStatus(false);
+      }
+
+      return new ResponseEntity<GeneralResponse>(response, HttpStatus.CREATED);
+   }
+
+   @GetMapping(path = "/battery", consumes = "application/json", produces = "application/json")
+   public ResponseEntity<GeneralResponse> getDroneBatteryLevel(
+         @Valid @RequestBody DroneBySerialNumberRequest droneBySerialNumberRequest)
+         throws Exception {
+      GeneralResponse response = new GeneralResponse();
+
+      try {
+         DroneBatteryResponse droneBattery = droneService.getBatteryLevel(droneBySerialNumberRequest);
+         response.setMessage("Drone battery level returned");
+         response.setStatus(true);
+         response.setData(droneBattery);
       } catch (CustomArgumentException $e) {
          response.setMessage($e.getMessage());
          response.setStatus(false);
