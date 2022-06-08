@@ -73,7 +73,15 @@ While implementing your solution **please take care of the following requirement
 
 ## How to Run
 
-This can be easily done using docker. An helper script was added to `./bin`. Run the executable script to run the installation.
+### Requirements
+
+- Install `mvn` globally
+- Install `docker `
+- Install `docker-compose`.
+
+### Run project
+
+The script `./bin/start` can be executed to do all the runnings once all the above listed requirements are met.
 
 ### API Documentation
 
