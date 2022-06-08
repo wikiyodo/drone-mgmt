@@ -34,17 +34,20 @@ public class MainController {
    public ResponseEntity<GeneralResponse> addNewDrone(@Valid @RequestBody NewDroneRequest newDroneRequest)
          throws Exception {
       GeneralResponse response = new GeneralResponse();
+      HttpStatus status = HttpStatus.CREATED;
+
       try {
          DroneResponse newDrone = droneService.register(newDroneRequest);
          response.setMessage("Drone has been succesfully created");
          response.setStatus(true);
          response.setData(newDrone);
       } catch (Exception $e) {
+         status = HttpStatus.BAD_REQUEST;
          response.setMessage($e.getMessage());
          response.setStatus(false);
       }
 
-      return new ResponseEntity<GeneralResponse>(response, HttpStatus.CREATED);
+      return new ResponseEntity<GeneralResponse>(response, status);
    }
 
    @PostMapping(path = "/medications", consumes = "application/json", produces = "application/json")
@@ -52,6 +55,7 @@ public class MainController {
          @Valid @RequestBody LoadDroneMedicationsRequest loadDroneMedicationsRequest)
          throws Exception {
       GeneralResponse response = new GeneralResponse();
+      HttpStatus status = HttpStatus.CREATED;
 
       try {
          DroneMedicationsResponse droneMedications = droneService.loadMedication(loadDroneMedicationsRequest);
@@ -62,12 +66,14 @@ public class MainController {
          response.setMessage($e.getMessage());
          response.setStatus(false);
          response.setError($e.getFieldErrors());
+         status = HttpStatus.BAD_REQUEST;
       } catch (Exception $e) {
          response.setMessage($e.getMessage());
          response.setStatus(false);
+         status = HttpStatus.BAD_REQUEST;
       }
 
-      return new ResponseEntity<GeneralResponse>(response, HttpStatus.CREATED);
+      return new ResponseEntity<GeneralResponse>(response, status);
    }
 
    @GetMapping(path = "/medications", consumes = "application/json", produces = "application/json")
@@ -75,6 +81,7 @@ public class MainController {
          @Valid @RequestBody DroneBySerialNumberRequest droneBySerialNumberRequest)
          throws Exception {
       GeneralResponse response = new GeneralResponse();
+      HttpStatus status = HttpStatus.OK;
 
       try {
          DroneMedicationsResponse droneMedications = droneService.getMedications(droneBySerialNumberRequest);
@@ -85,18 +92,21 @@ public class MainController {
          response.setMessage($e.getMessage());
          response.setStatus(false);
          response.setError($e.getFieldErrors());
+         status = HttpStatus.NOT_FOUND;
       } catch (Exception $e) {
          response.setMessage($e.getMessage());
          response.setStatus(false);
+         status = HttpStatus.NOT_ACCEPTABLE;
       }
 
-      return new ResponseEntity<GeneralResponse>(response, HttpStatus.CREATED);
+      return new ResponseEntity<GeneralResponse>(response, status);
    }
 
    @GetMapping(path = "", consumes = "application/json", produces = "application/json")
    public ResponseEntity<GeneralResponse> getAvailableDrones()
          throws Exception {
       GeneralResponse response = new GeneralResponse();
+      HttpStatus status = HttpStatus.OK;
 
       try {
          DronesResponse drones = droneService.getAvailableDrones();
@@ -107,12 +117,14 @@ public class MainController {
          response.setMessage($e.getMessage());
          response.setStatus(false);
          response.setError($e.getFieldErrors());
+         status = HttpStatus.NOT_FOUND;
       } catch (Exception $e) {
          response.setMessage($e.getMessage());
          response.setStatus(false);
+         status = HttpStatus.NOT_ACCEPTABLE;
       }
 
-      return new ResponseEntity<GeneralResponse>(response, HttpStatus.CREATED);
+      return new ResponseEntity<GeneralResponse>(response, status);
    }
 
    @GetMapping(path = "/battery", consumes = "application/json", produces = "application/json")
@@ -120,6 +132,7 @@ public class MainController {
          @Valid @RequestBody DroneBySerialNumberRequest droneBySerialNumberRequest)
          throws Exception {
       GeneralResponse response = new GeneralResponse();
+      HttpStatus status = HttpStatus.OK;
 
       try {
          DroneBatteryResponse droneBattery = droneService.getBatteryLevel(droneBySerialNumberRequest);
@@ -130,9 +143,11 @@ public class MainController {
          response.setMessage($e.getMessage());
          response.setStatus(false);
          response.setError($e.getFieldErrors());
+         status = HttpStatus.NOT_FOUND;
       } catch (Exception $e) {
          response.setMessage($e.getMessage());
          response.setStatus(false);
+         status = HttpStatus.NOT_ACCEPTABLE;
       }
 
       return new ResponseEntity<GeneralResponse>(response, HttpStatus.CREATED);
