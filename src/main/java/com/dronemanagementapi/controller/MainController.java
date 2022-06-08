@@ -7,6 +7,7 @@ import com.dronemanagementapi.data.request.LoadDroneMedicationsRequest;
 import com.dronemanagementapi.data.request.NewDroneRequest;
 import com.dronemanagementapi.data.response.DroneMedicationsResponse;
 import com.dronemanagementapi.data.response.DroneResponse;
+import com.dronemanagementapi.data.response.DronesResponse;
 import com.dronemanagementapi.data.response.GeneralResponse;
 import com.dronemanagementapi.exceptions.CustomArgumentException;
 import com.dronemanagementapi.service.DroneServiceImpl;
@@ -92,16 +93,15 @@ public class MainController {
    }
 
    @GetMapping(path = "", consumes = "application/json", produces = "application/json")
-   public ResponseEntity<GeneralResponse> getAvailableDrones(
-         @Valid @RequestBody DroneBySerialNumberRequest droneBySerialNumberRequest)
+   public ResponseEntity<GeneralResponse> getAvailableDrones()
          throws Exception {
       GeneralResponse response = new GeneralResponse();
 
       try {
-         DroneMedicationsResponse droneMedications = droneService.getMedications(droneBySerialNumberRequest);
-         response.setMessage("Medications have been loaded!");
+         DronesResponse drones = droneService.getAvailableDrones();
+         response.setMessage("Available drones!");
          response.setStatus(true);
-         response.setData(droneMedications);
+         response.setData(drones);
       } catch (CustomArgumentException $e) {
          response.setMessage($e.getMessage());
          response.setStatus(false);

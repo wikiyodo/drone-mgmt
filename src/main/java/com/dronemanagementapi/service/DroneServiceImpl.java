@@ -8,6 +8,7 @@ import com.dronemanagementapi.data.request.LoadDroneMedicationsRequest;
 import com.dronemanagementapi.data.request.NewDroneRequest;
 import com.dronemanagementapi.data.response.DroneMedicationsResponse;
 import com.dronemanagementapi.data.response.DroneResponse;
+import com.dronemanagementapi.data.response.DronesResponse;
 import com.dronemanagementapi.enums.DroneState;
 import com.dronemanagementapi.exceptions.CustomArgumentException;
 import com.dronemanagementapi.model.Drone;
@@ -110,6 +111,9 @@ public class DroneServiceImpl {
                "Error in provided data");
       }
 
+      drone.setState("LOADING");
+      droneRepository.save(drone);
+
       List<DroneMedication> droneMedications = droneMedicationRepository.findByDrone(drone);
       List<Medication> medications = new ArrayList<Medication>();
 
@@ -121,6 +125,19 @@ public class DroneServiceImpl {
 
       response.setDrone(drone);
       response.setMedications(medications);
+
+      drone.setState("LOADED");
+      droneRepository.save(drone);
+
+      return response;
+   }
+
+   public DronesResponse getAvailableDrones()
+         throws CustomArgumentException {
+      List<Drone> drones = droneRepository.findAllByState("IDLE");
+      DronesResponse response = new DronesResponse();
+
+      response.setDrones(drones);
 
       return response;
    }

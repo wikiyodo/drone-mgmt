@@ -8,7 +8,7 @@ import java.util.List;
 public class DronesResponse extends GeneralData {
    private List<Drone> drones;
 
-   public void setDrone(List<Drone> drones) {
+   public void setDrones(List<Drone> drones) {
       this.drones = drones;
    }
 
