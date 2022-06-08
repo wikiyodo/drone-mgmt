@@ -150,6 +150,6 @@ public class MainController {
          status = HttpStatus.NOT_ACCEPTABLE;
       }
 
-      return new ResponseEntity<GeneralResponse>(response, HttpStatus.CREATED);
+      return new ResponseEntity<GeneralResponse>(response, status);
    }
 }
