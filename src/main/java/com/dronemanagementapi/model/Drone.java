@@ -92,4 +92,8 @@ public class Drone {
    public String getState() {
       return state;
    }
+
+   public Integer getId() {
+      return id;
+   }
 }

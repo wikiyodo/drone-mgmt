@@ -3,6 +3,7 @@ package com.dronemanagementapi.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dronemanagementapi.data.request.DroneBySerialNumberRequest;
 import com.dronemanagementapi.data.request.LoadDroneMedicationsRequest;
 import com.dronemanagementapi.data.request.NewDroneRequest;
 import com.dronemanagementapi.data.response.DroneMedicationsResponse;
@@ -90,6 +91,32 @@ public class DroneServiceImpl {
          droneMedication.setMedication(medications.get(i));
          droneMedication.setCreatedDate();
          droneMedicationRepository.save(droneMedication);
+      }
+
+      response.setDrone(drone);
+      response.setMedications(medications);
+
+      return response;
+   }
+
+   public DroneMedicationsResponse getMedications(DroneBySerialNumberRequest droneBySerialNumberRequest)
+         throws CustomArgumentException {
+      Drone drone = droneRepository.findBySerialNumber(droneBySerialNumberRequest.getSerialNumber());
+      DroneMedicationsResponse response = new DroneMedicationsResponse();
+
+      if (drone == null) {
+         throw new CustomArgumentException("serialNumber",
+               "Could not locate drone with the serial number: " + droneBySerialNumberRequest.getSerialNumber(),
+               "Error in provided data");
+      }
+
+      List<DroneMedication> droneMedications = droneMedicationRepository.findByDrone(drone);
+      List<Medication> medications = new ArrayList<Medication>();
+
+      for (int i = 0; i < droneMedications.size(); i++) {
+         Medication medication = droneMedications.get(i).getMedication();
+
+         medications.add(medication);
       }
 
       response.setDrone(drone);
