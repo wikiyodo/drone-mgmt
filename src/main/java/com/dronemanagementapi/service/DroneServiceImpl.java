@@ -4,9 +4,14 @@ import com.dronemanagementapi.data.request.NewDroneRequest;
 import com.dronemanagementapi.data.response.DroneResponse;
 import com.dronemanagementapi.enums.DroneState;
 import com.dronemanagementapi.model.Drone;
+import com.dronemanagementapi.model.seeds.MedicationSeeder;
+import com.dronemanagementapi.repository.DroneMedicationRepository;
 import com.dronemanagementapi.repository.DroneRepository;
+import com.dronemanagementapi.repository.MedicationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,8 +20,8 @@ public class DroneServiceImpl {
    private DroneRepository droneRepository;
    // @Autowired
    // private DroneMedicationRepository droneMedicationRepository;
-   // @Autowired
-   // private MedicationRepository medicationRepository;
+   @Autowired
+   private MedicationRepository medicationRepository;
 
    public DroneResponse register(NewDroneRequest newDroneRequest) {
       Drone drone = new Drone();
@@ -35,5 +40,11 @@ public class DroneServiceImpl {
       response.setWeightLimit(newDroneRequest.getWeightLimit());
 
       return response;
+   }
+
+   @EventListener
+   public void seed(ContextRefreshedEvent event) {
+      MedicationSeeder medicationSeeder = new MedicationSeeder(medicationRepository);
+      medicationSeeder.run();
    }
 }
