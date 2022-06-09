@@ -1,10 +1,19 @@
 package com.dronemanagementapi.model;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
+@Entity
+@Table(name = "medications")
 public class Medication {
    @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "id")
+   private Integer id;
 
    @Column(name = "name", columnDefinition = "VARCHAR(500) NOT NULL")
    private String name;
