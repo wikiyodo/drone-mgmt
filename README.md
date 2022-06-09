@@ -75,14 +75,16 @@ While implementing your solution **please take care of the following requirement
 
 ### Requirements
 
-- Linux Operating system
+- Linux Operating system (or WSL2)
+- Install `git`
 - Install `docker `
 - Install `docker-compose`.
 - Install `mvn` (optional)
 
 ### Run project
 
-The script `./bin/start` can be executed start the application once all the above listed requirements are met.
+- Run comand to clone repository `git clone https://github.com/wikiyodo/drone-mgmt.git`
+- The script `./bin/start` can be executed start the application once all the above listed requirements are met.
 
 ### API Documentation
 
