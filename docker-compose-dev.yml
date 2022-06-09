@@ -14,9 +14,10 @@ services:
     networks:
       - default
   droneservice:
-    image: wikiyodo12/musula-drone-software
-    depends_on:
-      - mysqldbinstance
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
     ports:
       - "8001:8001"
     networks:

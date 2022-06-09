@@ -75,13 +75,14 @@ While implementing your solution **please take care of the following requirement
 
 ### Requirements
 
-- Install `mvn` globally
+- Linux Operating system
 - Install `docker `
 - Install `docker-compose`.
+- Install `mvn` (optional)
 
 ### Run project
 
-The script `./bin/start` can be executed to do all the runnings once all the above listed requirements are met.
+The script `./bin/start` can be executed start the application once all the above listed requirements are met.
 
 ### API Documentation
 
